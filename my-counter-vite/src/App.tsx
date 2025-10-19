@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { useOthello } from './hooks/useOthello';
+import Board from './components/Board';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const { board, handleCellClick, currentPlayer, score, winner,resetGame, message ,gameOver } = useOthello();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: 20 }}>
+      <h1>オセロゲーム</h1>
+      <button onClick={resetGame} style={{ marginTop: 20 }}>
+        リセット
+      </button>
+      <h2>手番: {currentPlayer === "black" ? "黒" : "白"}</h2>
+      <Board board={board} onCellClick={handleCellClick} />
+      <div>黒: {score.black} / 白: {score.white}</div>
+      <h3>{message}</h3>
 
-export default App
+        {gameOver && (
+          <h2>
+            {winner === "draw" ? "引き分け": winner === "black" ? "黒の勝ち" : "白の勝ち"}
+          </h2>
+        )}
+      </div>
+  );
+};
+
+export default App;
