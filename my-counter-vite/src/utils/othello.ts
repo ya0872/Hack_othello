@@ -7,6 +7,3 @@ export const FirstOthelloBoard = (): Board =>{
     board[4][4] = 'white'
     return board;
 };
-/*export const clone = (): Board =>{
-    
-};  */
