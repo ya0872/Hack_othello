@@ -15,6 +15,14 @@ export const useOthello = () => {
 
     const [history, setHistory] = useState<{y:number; x:number}[]>([]);
 
+    const resetGame = () => {
+        setBoard(FirstOthelloBoard());
+        setCurrentPlayer("black");
+        setScore({ black: 2, white: 2 });
+        setWinner(null);
+        setGameOver(false);
+        setMessage("");
+    };
 
     const handleCellClick =  (y: number, x: number) => {
         setMessage("");
@@ -54,9 +62,7 @@ export const useOthello = () => {
             setMessage("");
         }
     };
-
-
-
+    
     const updateScore = (board: Board) => {
         let black = 0;
         let white = 0;
@@ -78,10 +84,9 @@ export const useOthello = () => {
         return false;
     };
     
-
     return{
-        board, currentPlayer, gameOver, score, handleCellClick, winner, message,
-
+        board, currentPlayer, gameOver, score, resetGame, handleCellClick, winner, message,
+        
         history
     };
 };
