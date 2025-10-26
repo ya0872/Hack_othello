@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type { Board, Player,} from "../types";
+import {type Board, type Player} from "../types";
 import {FirstOthelloBoard} from "../utils/othello";
 import {getFlippableStones} from "../utils/flipUtils";
 
@@ -12,6 +12,8 @@ export const useOthello = () => {
     });
     const [winner, setWinner] = useState<"black" | "white" | "draw" | null>(null);
     const [message, setMessage] = useState<string>("");
+
+    const [history, setHistory] = useState<{y:number; x:number}[]>([]);
 
 
     const handleCellClick =  (y: number, x: number) => {
@@ -32,6 +34,9 @@ export const useOthello = () => {
         updateScore(newBoard);
 
         switchPlayer(newBoard); 
+
+        setHistory([...history, { y, x }]);
+
     };
 
     const switchPlayer = (currentBoard: Board) => { 
@@ -75,6 +80,8 @@ export const useOthello = () => {
     
 
     return{
-        board, currentPlayer, gameOver, score, handleCellClick, winner, message
+        board, currentPlayer, gameOver, score, handleCellClick, winner, message,
+
+        history
     };
 };
